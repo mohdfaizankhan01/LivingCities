@@ -1,0 +1,17 @@
+# Secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Cognee local data / cache (used if ever running without Cloud)
+.cognee/
+.cognee_system/
+cognee_data/
+.data_storage/
+*.log

@@ -1,0 +1,178 @@
+# LivingCities — LCUI scoring configuration (Safir's final 20-indicator list).
+#
+# Five pillars × 4 indicators each. Each indicator has:
+#   id       — stable cache key (never rename once scored)
+#   question — the yes/no-style question posed to Cognee
+#   rubric   — criteria the LLM uses to pick found / partial / not_found
+#
+# Edit this file to tune indicators or weights. Do NOT edit scoring.py
+# to change judging behaviour — the rubric is the right knob.
+
+pillars:
+  - id: ecological_continuity
+    name: "Ecological Continuity"
+    weight: 1.0
+    indicators:
+      - id: ec_green_connectivity
+        question: "Is the city's green space connected via corridors or canopy, or scattered in disconnected patches?"
+        rubric:
+          found: "Green patches linked by named corridors or canopy, with maps/GIS/text describing a connected network."
+          partial: "Some green areas exist but described as scattered or only loosely linked."
+          not_found: "No mention of green cover, or explicitly described as fragmented with no links."
+
+      - id: ec_blue_green_corridors
+        question: "Are there blue-green corridors — rivers, wetlands, or canals paired with planted greenways?"
+        rubric:
+          found: "A named corridor or river/wetland-reconnection project with length or coverage data."
+          partial: "Waterways exist but are concrete-lined/channelized with no green linkage."
+          not_found: "No water-linked green corridors mentioned."
+
+      - id: ec_protected_zones
+        question: "Are there legally protected ecological zones (reserves, eco-sensitive zones, protected forest)?"
+        rubric:
+          found: "A named, legally protected zone covering a meaningful share of land."
+          partial: "A zone proposed or informally protected but not legally locked in."
+          not_found: "No protected zones mentioned."
+
+      - id: ec_species_tracking
+        question: "Is there any tracking of native plant or animal species over time?"
+        rubric:
+          found: "A species survey, biodiversity register, or citizen-science record with a baseline and trend."
+          partial: "A one-time species list exists, nothing ongoing."
+          not_found: "No species data mentioned."
+
+  - id: multispecies_infrastructure
+    name: "Multispecies Infrastructure"
+    weight: 1.0
+    indicators:
+      - id: ms_wildlife_crossings
+        question: "Is there evidence of wildlife crossings or corridors (bridges, underpasses, overpasses for animals)?"
+        rubric:
+          found: "A named wildlife crossing described as in use."
+          partial: "A crossing planned or proposed but not yet built."
+          not_found: "No wildlife crossings mentioned."
+
+      - id: ms_nesting_shelter
+        question: "Is there nesting or shelter infrastructure for animals (bird boxes, bat shelters, insect hotels, burrows)?"
+        rubric:
+          found: "A specific nesting or shelter feature named and described."
+          partial: "General biodiversity-friendly language but no specific feature named."
+          not_found: "No mention of nesting/shelter features."
+
+      - id: ms_pollinator
+        question: "Are there pollinator gardens or corridors (bee- or butterfly-friendly planting)?"
+        rubric:
+          found: "A named pollinator program or planting covering a real share of parkland."
+          partial: "A small isolated pollinator patch, not part of a wider plan."
+          not_found: "No mention."
+
+      - id: ms_atrisk_lighting
+        question: "Are there special protections for at-risk species, or lighting designed to avoid harming wildlife?"
+        rubric:
+          found: "A named protection measure for an endangered species, or dark-sky/reduced-light zoning for wildlife."
+          partial: "General awareness or intent, but no concrete measure."
+          not_found: "No mention."
+
+  - id: regenerative_systems
+    name: "Ecological Functionality / Regenerative Systems"
+    weight: 1.0
+    indicators:
+      - id: ef_permeable
+        question: "Are surfaces permeable (letting rain soak in) instead of solid concrete or asphalt?"
+        rubric:
+          found: "Permeable paving documented or targeted with a % figure."
+          partial: "Mentioned as a pilot or future plan, not widespread."
+          not_found: "No mention; surfaces described as sealed/impervious."
+
+      - id: ef_rainwater
+        question: "Is rainwater collected or retained (rain gardens, harvesting tanks, sponge-city features)?"
+        rubric:
+          found: "A rainwater harvesting/retention system documented with a % of rainfall captured."
+          partial: "Harvesting required by code, but no data it's actually happening."
+          not_found: "No mention."
+
+      - id: ef_urban_agriculture
+        question: "Is there urban agriculture or food-growing space (community gardens, edible landscaping, rooftop farms)?"
+        rubric:
+          found: "A named urban agriculture project with area or participation numbers."
+          partial: "A few individual gardens exist, nothing city-wide or organized."
+          not_found: "No mention."
+
+      - id: ef_soil_carbon
+        question: "Is there attention to soil health or carbon storage (soil restoration, tree cover for carbon capture)?"
+        rubric:
+          found: "A soil health index, testing program, or carbon sequestration figure referenced."
+          partial: "General tree planting mentioned but no health or carbon data."
+          not_found: "No mention."
+
+  - id: human_nature
+    name: "Human-Nature Relationship & Equity"
+    weight: 1.0
+    indicators:
+      - id: hn_proximity
+        question: "Do most residents live close to green space (roughly a 300m / short walk away)?"
+        rubric:
+          found: "A % of residents within 300m documented and reasonably high."
+          partial: "Proximity mentioned but described as uneven across neighbourhoods."
+          not_found: "No data, or access explicitly described as poor/unequal."
+
+      - id: hn_universal_access
+        question: "Is green space designed so everyone can use it (wheelchair access, sensory-friendly design), not just wealthier areas?"
+        rubric:
+          found: "Named universal-design features or accessibility standards referenced and applied."
+          partial: "Accessible in some places only, or a standard exists but isn't consistently applied."
+          not_found: "No mention, or green space described as exclusive/gentrified."
+
+      - id: hn_education
+        question: "Are there environmental education programs (school lessons, public campaigns) teaching people about nature?"
+        rubric:
+          found: "A named, recurring program or campaign referenced."
+          partial: "A one-off event or workshop, not repeated."
+          not_found: "No mention."
+
+      - id: hn_stewardship
+        question: "Are there community-led stewardship efforts (residents managing gardens, green roofs, or farms together)?"
+        rubric:
+          found: "A named stewardship program with area or participation figures."
+          partial: "Informal, small-scale, unfunded effort."
+          not_found: "No mention."
+
+  - id: governance
+    name: "Policy Integration & Governance"
+    weight: 1.0
+    indicators:
+      - id: pg_zoning_enforced
+        question: "Are there ecological zoning laws that are actually enforced, not just written down?"
+        rubric:
+          found: "A named law/policy referenced with enforcement data or coverage %."
+          partial: "A law exists on paper, but no evidence of enforcement."
+          not_found: "No ecological zoning mentioned."
+
+      - id: pg_bia
+        question: "Are Biodiversity Impact Assessments required before big development projects?"
+        rubric:
+          found: "A mandatory assessment policy referenced and applied to new projects."
+          partial: "An assessment recommended or proposed, not mandatory."
+          not_found: "No mention."
+
+      - id: pg_green_codes
+        question: "Are there green building or multispecies design codes that projects must follow?"
+        rubric:
+          found: "A named code or certification with a compliance %."
+          partial: "A code exists but is optional or compliance isn't tracked."
+          not_found: "No mention."
+
+      - id: pg_agency_dashboard
+        question: "Is there a dedicated urban-ecology agency, and does the city publish a public biodiversity/resilience dashboard?"
+        rubric:
+          found: "A named institution plus a public annual dashboard or report."
+          partial: "Responsibility assigned informally, no dashboard."
+          not_found: "No mention."
+
+# Score bands map a 0-100 total to a human-readable label.
+score_bands:
+  - {min: 0,  max: 29,  label: "Fragile"}
+  - {min: 30, max: 49,  label: "Emerging"}
+  - {min: 50, max: 69,  label: "Transitional"}
+  - {min: 70, max: 84,  label: "Life-Responsive"}
+  - {min: 85, max: 100, label: "Ecologically Rooted"}

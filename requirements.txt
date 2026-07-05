@@ -1,0 +1,7 @@
+# LivingCities dependencies
+cognee>=1.2.2          # remember()/recall()/improve()/forget() + Cognee Cloud (serve)
+python-dotenv>=1.0.0  # load COGNEE_SERVICE_URL / COGNEE_API_KEY from .env
+pdfplumber>=0.11.0    # fallback: local PDF text extraction when native ingestion fails
+pyyaml>=6.0           # load indicators.yaml scoring config
+fastapi>=0.116.0      # backend API (api.py)
+uvicorn>=0.30.0       # ASGI server for the backend
