@@ -1,0 +1,202 @@
+{
+  "ec_green_connectivity": {
+    "id": "ec_green_connectivity",
+    "question": "Is the city's green space connected via corridors or canopy, or scattered in disconnected patches?",
+    "verdict": "partial",
+    "confidence": 0.75,
+    "reasoning": "The context describes green areas as fragmented zones, indicating scattered patches rather than a fully connected corridor network.",
+    "evidence_quote": "Once contiguous, it is now divided into five fragmented zones",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ec_blue_green_corridors": {
+    "id": "ec_blue_green_corridors",
+    "question": "Are there blue-green corridors — rivers, wetlands, or canals paired with planted greenways?",
+    "verdict": "found",
+    "confidence": 0.9,
+    "reasoning": "Le texte cite un tronçon nommé de la rivière (le « Northern stretch ») avec une longueur précise (26 km).",
+    "evidence_quote": "The ‘Northern stretch’ running over 26 km from the Palla village till the Wazirabad barrage cum road.",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ec_protected_zones": {
+    "id": "ec_protected_zones",
+    "question": "Are there legally protected ecological zones (reserves, eco-sensitive zones, protected forest)?",
+    "verdict": "found",
+    "confidence": 0.95,
+    "reasoning": "The evidence cites legally designated protected forests and Eco‑Sensitive Zones, satisfying the FOUND criterion.",
+    "evidence_quote": "",
+    "quote_unverified": true,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ec_species_tracking": {
+    "id": "ec_species_tracking",
+    "question": "Is there any tracking of native plant or animal species over time?",
+    "verdict": "not_found",
+    "confidence": 0.93,
+    "reasoning": "The evidence provides a one‑time species list and survey activity but no baseline with temporal trend tracking.",
+    "evidence_quote": "Ground Survey and collection of Geo-Coordinates to map the distribution of Invasive and Native Species in the Ridge",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ms_wildlife_crossings": {
+    "id": "ms_wildlife_crossings",
+    "question": "Is there evidence of wildlife crossings or corridors (bridges, underpasses, overpasses for animals)?",
+    "verdict": "not_found",
+    "confidence": 0.95,
+    "reasoning": "The retrieved text contains no named wildlife crossing (bridge, underpass, overpass) described as being in use.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ms_nesting_shelter": {
+    "id": "ms_nesting_shelter",
+    "question": "Is there nesting or shelter infrastructure for animals (bird boxes, bat shelters, insect hotels, burrows)?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "The text contains no named bird boxes, bat shelters, insect hotels, or burrows, only generic references to nesting space.",
+    "evidence_quote": "Ability to provide nectar and nesting space pollinators.",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ms_pollinator": {
+    "id": "ms_pollinator",
+    "question": "Are there pollinator gardens or corridors (bee- or butterfly-friendly planting)?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "The text only mentions pollinator‑related selection criteria, not a named pollinator program or quantified planting share of parkland.",
+    "evidence_quote": "v) Value for pollinators",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ms_atrisk_lighting": {
+    "id": "ms_atrisk_lighting",
+    "question": "Are there special protections for at-risk species, or lighting designed to avoid harming wildlife?",
+    "verdict": "not_found",
+    "confidence": 0.95,
+    "reasoning": "The text contains no named protection measures for endangered species nor any dark‑sky or reduced‑light zoning for wildlife.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ef_permeable": {
+    "id": "ef_permeable",
+    "question": "Are surfaces permeable (letting rain soak in) instead of solid concrete or asphalt?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "Le texte ne mentionne ni pavage perméable documenté ni objectif chiffré, donc le critère n’est pas satisfait.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ef_rainwater": {
+    "id": "ef_rainwater",
+    "question": "Is rainwater collected or retained (rain gardens, harvesting tanks, sponge-city features)?",
+    "verdict": "partial",
+    "confidence": 0.94,
+    "reasoning": "The text mentions rainwater harvesting as a permitted activity, but provides no quantitative data on rainfall captured.",
+    "evidence_quote": "Permitted activities : Ongoing agricultural or horticultural practices, rainwater harvesting, organic farming, use of renewable energy sources, and adoption of green technology for all activities.",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ef_urban_agriculture": {
+    "id": "ef_urban_agriculture",
+    "question": "Is there urban agriculture or food-growing space (community gardens, edible landscaping, rooftop farms)?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "The text only mentions agriculture and horticulture as permitted activities, without naming a concrete urban agriculture project with area or participation data.",
+    "evidence_quote": "a) Agriculture and horticulture",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "ef_soil_carbon": {
+    "id": "ef_soil_carbon",
+    "question": "Is there attention to soil health or carbon storage (soil restoration, tree cover for carbon capture)?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "Le texte ne mentionne aucun indice de santé des sols, programme de tests ou chiffre de séquestration du carbone.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "hn_proximity": {
+    "id": "hn_proximity",
+    "question": "Do most residents live close to green space (roughly a 300m / short walk away)?",
+    "verdict": "partial",
+    "confidence": 0.85,
+    "reasoning": "The evidence mentions that green access is unevenly spread across the city, indicating proximity to green space varies by neighbourhood, but no specific % of residents within 300 m is provided.",
+    "evidence_quote": "the per capita green is unevenly spread across the city",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "hn_universal_access": {
+    "id": "hn_universal_access",
+    "question": "Is green space designed so everyone can use it (wheelchair access, sensory-friendly design), not just wealthier areas?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "No named universal‑design features or accessibility standards (e.g., wheelchair ramps, sensory‑friendly design) are mentioned in the text.",
+    "evidence_quote": "",
+    "quote_unverified": true,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "hn_education": {
+    "id": "hn_education",
+    "question": "Are there environmental education programs (school lessons, public campaigns) teaching people about nature?",
+    "verdict": "partial",
+    "confidence": 0.78,
+    "reasoning": "Le texte mentionne une activité d'« Outreach and Education » dans le cadre du Green Action Plan, mais sans détails sur un programme récurrent ou des campagnes spécifiques.",
+    "evidence_quote": "",
+    "quote_unverified": true,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "hn_stewardship": {
+    "id": "hn_stewardship",
+    "question": "Are there community-led stewardship efforts (residents managing gardens, green roofs, or farms together)?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "Aucun programme de gestion communautaire nommée où les résidents entretiennent ensemble des jardins, toits verts ou fermes n’est mentionné dans le texte.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "pg_zoning_enforced": {
+    "id": "pg_zoning_enforced",
+    "question": "Are there ecological zoning laws that are actually enforced, not just written down?",
+    "verdict": "found",
+    "confidence": 0.93,
+    "reasoning": "Le texte cite une loi zonale nommée (notification d'ESZ de 2017) avec une superficie précise, indiquant une mise en œuvre concrète.",
+    "evidence_quote": "As per the ESZ notification for Delhi dated September 12, 2017 , i n Delhi, the Eco -sensitive Zone constitutes 17.92 Sq km",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "pg_bia": {
+    "id": "pg_bia",
+    "question": "Are Biodiversity Impact Assessments required before big development projects?",
+    "verdict": "not_found",
+    "confidence": 0.96,
+    "reasoning": "Le texte ne mentionne aucun mandat d'évaluation d'impact sur la biodiversité avant les grands projets de développement.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "pg_green_codes": {
+    "id": "pg_green_codes",
+    "question": "Are there green building or multispecies design codes that projects must follow?",
+    "verdict": "not_found",
+    "confidence": 0.95,
+    "reasoning": "Le texte ne mentionne aucun code de construction verte ou de conception multispecies nommé avec un pourcentage de conformité.",
+    "evidence_quote": "",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  },
+  "pg_agency_dashboard": {
+    "id": "pg_agency_dashboard",
+    "question": "Is there a dedicated urban-ecology agency, and does the city publish a public biodiversity/resilience dashboard?",
+    "verdict": "found",
+    "confidence": 0.93,
+    "reasoning": "Le texte nomme le Department of Forests and Wildlife comme agence nodale et cite un Baseline Report public sur la biodiversité/resilience",
+    "evidence_quote": "Department of Forests and Wildlife, Govt. of NCT of Delhi, being the Nodal Agency, undertakes the plantation drive under Green Action Plan",
+    "quote_unverified": false,
+    "source": "delhi_baseline_environment.pdf"
+  }
+}

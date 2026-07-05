@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://127.0.0.1:5500/index.html";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "/app.html";
 
 /**
  * The one action on the page. Concrete at rest; on hover a vine

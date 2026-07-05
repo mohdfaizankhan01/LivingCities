@@ -362,7 +362,18 @@
 </div>
 
 <script>
-const API = "http://localhost:8000";
+const API = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://localhost:8000"
+  : null; // static mode: use bundled JSON
+
+async function apiFetch(path) {
+  if (API) return fetch(API + path).then(r => r.json());
+  // static fallback: /score?city=X -> /data-X.json
+  const m = path.match(/\/score\?city=(\w+)/);
+  if (m) return fetch("/data-" + m[1] + ".json").then(r => r.json());
+  // ask/feedback/forget not available in static demo
+  return Promise.reject(new Error("Live API not available in demo mode"));
+}
 const $ = (id) => document.getElementById(id);
 
 // ---- state ----
@@ -674,8 +685,8 @@ async function loadSingle(city) {
   overlay(true, "Loading " + (city === "delhi" ? "Delhi" : "Geneva") + " scorecard…");
   try {
     var results = await Promise.all([
-      fetch(API + "/score?city=" + city).then(function(r) { return r.json(); }),
-      fetch(API + "/documents?city=" + city).then(function(r) { return r.json(); }).catch(function() { return { documents: [] }; }),
+      apiFetch("/score?city=" + city),
+      apiFetch("/documents?city=" + city).catch(function() { return { documents: [] }; }),
     ]);
     var card = results[0];
     var docs = results[1];
@@ -794,8 +805,8 @@ async function loadCompare() {
   overlay(true, "Loading both scorecards…");
   try {
     var results = await Promise.all([
-      _gCard ? Promise.resolve(_gCard) : fetch(API + "/score?city=geneva").then(function(r) { return r.json(); }),
-      _dCard ? Promise.resolve(_dCard) : fetch(API + "/score?city=delhi").then(function(r) { return r.json(); }),
+      _gCard ? Promise.resolve(_gCard) : apiFetch("/score?city=geneva"),
+      _dCard ? Promise.resolve(_dCard) : apiFetch("/score?city=delhi"),
     ]);
     var gCard = results[0];
     var dCard = results[1];
@@ -851,6 +862,7 @@ async function submitAsk() {
   showThinking("ask-result");
   overlay(true, "Querying memory…");
   try {
+    if (!API) throw new Error("Ask requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/ask?city=" + city, {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: question }),
@@ -881,6 +893,7 @@ async function submitAskCmp() {
   showThinking("cmp-ask-result");
   overlay(true, "Querying memory…");
   try {
+    if (!API) throw new Error("Ask requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/ask?city=" + compareAskCity, {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: question }),
@@ -904,6 +917,7 @@ async function submitFeedback() {
   $("fb-btn").disabled = true;
   overlay(true, "Updating memory & re-scoring…");
   try {
+    if (!API) throw new Error("Feedback requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/feedback", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ indicator_id: indicator_id, correction_text: correction_text }),
@@ -938,6 +952,7 @@ async function submitForget() {
   overlay(true, "Removing document & re-scoring…");
   try {
     var oldScore = parseInt($("score").textContent) || 0;
+    if (!API) throw new Error("Forget requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/forget", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ target: target }),
