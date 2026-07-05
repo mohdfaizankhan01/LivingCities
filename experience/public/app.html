@@ -362,17 +362,24 @@
 </div>
 
 <script>
-const API = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "http://localhost:8000"
-  : null; // static mode: use bundled JSON
+const IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+// Live Cognee-backed API. Locally it's the dev server; in production it's the
+// Hugging Face Space. Ask / Feedback / Forget always route here.
+const API = IS_LOCAL ? "http://localhost:8000" : "https://faizkh7786-livingcities-api.hf.space";
+// In production, scorecards load from bundled JSON for an instant first paint
+// (the free-tier backend can cold-start ~30s). Feedback/Forget force a live
+// re-fetch so their mutations are reflected.
+let _forceLiveScore = false;
 
 async function apiFetch(path) {
-  if (API) return fetch(API + path).then(r => r.json());
-  // static fallback: /score?city=X -> /data-X.json
   const m = path.match(/\/score\?city=(\w+)/);
-  if (m) return fetch("/data-" + m[1] + ".json").then(r => r.json());
-  // ask/feedback/forget not available in static demo
-  return Promise.reject(new Error("Live API not available in demo mode"));
+  if (m && !IS_LOCAL && !_forceLiveScore) {
+    return fetch("/data-" + m[1] + ".json").then(r => r.json());
+  }
+  if (path.startsWith("/documents") && !IS_LOCAL && !_forceLiveScore) {
+    return { documents: [] };
+  }
+  return fetch(API + path).then(r => r.json());
 }
 const $ = (id) => document.getElementById(id);
 
@@ -862,7 +869,6 @@ async function submitAsk() {
   showThinking("ask-result");
   overlay(true, "Querying memory…");
   try {
-    if (!API) throw new Error("Ask requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/ask?city=" + city, {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: question }),
@@ -893,7 +899,6 @@ async function submitAskCmp() {
   showThinking("cmp-ask-result");
   overlay(true, "Querying memory…");
   try {
-    if (!API) throw new Error("Ask requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/ask?city=" + compareAskCity, {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: question }),
@@ -917,16 +922,17 @@ async function submitFeedback() {
   $("fb-btn").disabled = true;
   overlay(true, "Updating memory & re-scoring…");
   try {
-    if (!API) throw new Error("Feedback requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/feedback", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ indicator_id: indicator_id, correction_text: correction_text }),
     }).then(function(r) { return r.json(); });
     if (res.error) throw new Error(res.error);
     _gCard = null;
-    // Reload but preserve old score for tint animation
+    // Reload but preserve old score for tint animation.
+    // Force a live re-fetch so the mutation is reflected (prod uses static JSON by default).
     var oldScore = parseInt($("score").textContent) || 0;
-    await loadSingle("geneva");
+    _forceLiveScore = true;
+    try { await loadSingle("geneva"); } finally { _forceLiveScore = false; }
     // Re-apply tint now that new score is rendered
     if (_gCard && _gCard.total !== oldScore) {
       animateScore(_gCard.total, { from: oldScore, tint: true, duration: 900 });
@@ -952,7 +958,6 @@ async function submitForget() {
   overlay(true, "Removing document & re-scoring…");
   try {
     var oldScore = parseInt($("score").textContent) || 0;
-    if (!API) throw new Error("Forget requires a live backend — not available in the static demo.");
     var res = await fetch(API + "/forget", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ target: target }),

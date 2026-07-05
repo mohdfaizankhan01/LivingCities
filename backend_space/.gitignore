@@ -1,0 +1,5 @@
+.cognee_system/
+.cognee_data/
+__pycache__/
+*.pyc
+.env

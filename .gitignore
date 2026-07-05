@@ -15,3 +15,11 @@ venv/
 cognee_data/
 .data_storage/
 *.log
+
+# Next.js build output & Netlify scratch
+experience/out/
+experience/.next/
+experience/.netlify/
+experience/node_modules/
+backend_space/.cognee_system/
+backend_space/.cognee_data/

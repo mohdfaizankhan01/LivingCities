@@ -2,7 +2,7 @@
 
 > Submission for **The Hangover Part AI** Hackathon &nbsp;·&nbsp; Team **noName**
 
-**Live demo → [livingcities-app.netlify.app](https://livingcities-app.netlify.app)**
+**Live demo → [livingcities-app.netlify.app](https://livingcities-app.netlify.app)** &nbsp;·&nbsp; **Live API → [HF Space](https://faizkh7786-livingcities-api.hf.space/health)**
 
 **The Life-Centric Urbanism Index — powered by living memory.**
 
@@ -171,6 +171,19 @@ Score bands:
 | 40–59 | Developing Awareness |
 | 20–39 | Ecologically Absent |
 | 0–19 | Ecologically Blind |
+
+---
+
+## Live Deployment
+
+The demo runs as a split architecture:
+
+| Piece | Host | Notes |
+|---|---|---|
+| Landing + scorecard (frontend) | **Netlify** — [livingcities-app.netlify.app](https://livingcities-app.netlify.app) | Next.js static export; scores load instantly from bundled JSON |
+| FastAPI + Cognee (backend) | **Hugging Face Spaces** (Docker) — [`/health`](https://faizkh7786-livingcities-api.hf.space/health) | Powers live **Ask / Feedback / Forget** against Cognee Cloud memory |
+
+Scorecards render instantly from static snapshots; the **Ask the city's memory** feature calls the live backend, which recalls grounded, quoted answers straight from Cognee. The backend deploy lives in [`backend_space/`](backend_space).
 
 ---
 
