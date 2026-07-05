@@ -19,10 +19,8 @@ from typing import Any, Sequence
 import cognee
 from dotenv import load_dotenv
 
-
 class CogneeConfigError(RuntimeError):
     """Raised when required Cognee Cloud configuration is missing."""
-
 
 @dataclass(frozen=True)
 class RememberSummary:
@@ -44,7 +42,6 @@ class RememberSummary:
         """True when the pipeline completed without erroring."""
         return self.status not in ("errored", "error") and self.error is None
 
-
 def summarize_remember(result: Any) -> RememberSummary:
     """Normalize a cloud dict or local RememberResult into a RememberSummary."""
     def field(name: str, default: Any) -> Any:
@@ -64,7 +61,6 @@ def summarize_remember(result: Any) -> RememberSummary:
         error=field("error", None),
         item_ids=item_ids,
     )
-
 
 def load_cloud_config() -> tuple[str, str]:
     """Load the Cognee Cloud service URL and API key from the environment.
@@ -98,7 +94,6 @@ def load_cloud_config() -> tuple[str, str]:
         )
     return service_url, api_key
 
-
 async def connect_cloud() -> None:
     """Connect the SDK to our Cognee Cloud tenant.
 
@@ -111,7 +106,6 @@ async def connect_cloud() -> None:
     service_url, api_key = load_cloud_config()
     await cognee.serve(url=service_url, api_key=api_key)
 
-
 async def disconnect_cloud() -> None:
     """Close the Cognee Cloud connection, releasing the HTTP session.
 
@@ -119,8 +113,6 @@ async def disconnect_cloud() -> None:
     never masks the original result.
     """
     try:
-        # cognee.disconnect() reverts to local mode but can leave the
-        # CloudClient's aiohttp session open; close it explicitly first.
         from cognee.api.v1.serve import state
 
         client = state.get_remote_client()
@@ -129,7 +121,6 @@ async def disconnect_cloud() -> None:
         await cognee.disconnect()
     except Exception:  # noqa: BLE001 - teardown must not raise
         pass
-
 
 def extract_answer(results: Sequence[Any]) -> str:
     """Extract a human-readable answer from a ``recall()`` result list.
@@ -159,7 +150,6 @@ def extract_answer(results: Sequence[Any]) -> str:
     if not answers:
         return f"(no answer field found in {len(results)} entr(y/ies))"
     return "\n\n".join(answers)
-
 
 def _answer_field(entry: Any) -> str:
     """Return the best answer-like field from a single recall entry."""

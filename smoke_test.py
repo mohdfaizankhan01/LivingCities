@@ -38,7 +38,6 @@ GENEVA_DIR = Path("documents/geneva")
 TEXT_DATASET = "smoke_text"
 PDF_DATASET = "smoke_pdf"
 
-
 async def check_text_round_trip() -> bool:
     """Remember a hardcoded sentence and recall a question about it.
 
@@ -64,7 +63,6 @@ async def check_text_round_trip() -> bool:
     print(f"      answer: {answer}\n")
     return not answer.startswith("(no answer")
 
-
 def pick_pdf(explicit: str | None) -> Path | None:
     """Choose the PDF to test: an explicit path, else the first in geneva/.
 
@@ -81,7 +79,6 @@ def pick_pdf(explicit: str | None) -> Path | None:
         return None
     pdfs = sorted(GENEVA_DIR.glob("*.pdf"))
     return pdfs[0] if pdfs else None
-
 
 def extract_pdf_text(pdf_path: Path) -> str:
     """Extract plain text from a PDF using pdfplumber (fallback path).
@@ -111,7 +108,6 @@ def extract_pdf_text(pdf_path: Path) -> str:
             "(likely a scanned/image-only PDF needing OCR)."
         )
     return text
-
 
 async def check_pdf_round_trip(pdf_path: Path, use_fallback: bool) -> bool:
     """Ingest one PDF (native or via pdfplumber) and recall a question.
@@ -166,7 +162,6 @@ async def check_pdf_round_trip(pdf_path: Path, use_fallback: bool) -> bool:
     print(f"      answer: {answer}\n")
     return not answer.startswith("(no answer")
 
-
 async def main(args: argparse.Namespace) -> int:
     """Run both round trips and return a process exit code."""
     try:
@@ -197,7 +192,6 @@ async def main(args: argparse.Namespace) -> int:
     print("=" * 50)
     return 0 if text_ok and pdf_ok is not False else 1
 
-
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="LivingCities Cognee smoke test")
@@ -213,7 +207,6 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Path to a specific PDF to test (default: first in documents/geneva/).",
     )
     return parser.parse_args(argv)
-
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main(parse_args())))

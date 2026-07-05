@@ -35,7 +35,6 @@ from cognee_cloud import connect_cloud, disconnect_cloud
 
 FEEDBACK_SESSION = "expert_feedback"
 
-# City registry: id -> config.  Adding a new city = adding one entry here.
 CITY_CONFIGS: dict[str, dict[str, Any]] = {
     "geneva": {
         "name": "Geneva",
@@ -51,7 +50,6 @@ CITY_CONFIGS: dict[str, dict[str, Any]] = {
     },
 }
 
-# Grounded Q&A prompt for /ask.
 _ASK_SYSTEM_PROMPT = (
     "You are a grounded Q&A assistant for LivingCities. "
     "Answer the user's question using ONLY the retrieved evidence. "
@@ -70,7 +68,6 @@ _ASK_SYSTEM_PROMPT = (
     "\"quotes\": [{\"text\": \"<verbatim span, original language, under 25 words>\"}]}"
 )
 
-
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     """Connect to Cognee Cloud for the app's lifetime."""
@@ -80,7 +77,6 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     finally:
         await disconnect_cloud()
 
-
 app = FastAPI(title="LivingCities API", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
@@ -89,23 +85,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 class FeedbackBody(BaseModel):
     indicator_id: str
     correction_text: str
 
-
 class ForgetBody(BaseModel):
     target: str
 
-
 class AskBody(BaseModel):
     question: str
-
-
-# ---------------------------------------------------------------------------
-# Internal helpers
-# ---------------------------------------------------------------------------
 
 def _parse_ask_response(text: str) -> Optional[dict[str, Any]]:
     try:
@@ -115,7 +103,6 @@ def _parse_ask_response(text: str) -> Optional[dict[str, Any]]:
     if not isinstance(data.get("answer"), str):
         return None
     return data
-
 
 def _find_quote_source(
     quote: str, chunks: list[dict[str, Any]], manifest: dict[str, str]
@@ -129,10 +116,8 @@ def _find_quote_source(
                 return manifest[data_id]
     return "corpus"
 
-
 def error(message: str, status: int = 400) -> JSONResponse:
     return JSONResponse(status_code=status, content={"error": message})
-
 
 def find_indicator(config: dict[str, Any], indicator_id: str) -> Optional[tuple[dict, dict]]:
     for pillar in config["pillars"]:
@@ -140,7 +125,6 @@ def find_indicator(config: dict[str, Any], indicator_id: str) -> Optional[tuple[
             if indicator["id"] == indicator_id:
                 return pillar, indicator
     return None
-
 
 def recompute(card: dict[str, Any], config: dict[str, Any]) -> None:
     for pillar in card["pillars"]:
@@ -151,7 +135,6 @@ def recompute(card: dict[str, Any], config: dict[str, Any]) -> None:
             pillar["scored"] = True
     card["total"] = scoring.weighted_total(card["pillars"])
     card["label"] = scoring.band_label(card["total"], config["score_bands"])
-
 
 async def _add_translations(card: dict[str, Any]) -> dict[str, Any]:
     """Translate every evidence_quote that lacks evidence_quote_en (in parallel)."""
@@ -172,11 +155,9 @@ async def _add_translations(card: dict[str, Any]) -> dict[str, Any]:
         ind["evidence_quote_en"] = result if isinstance(result, str) else ""
     return card
 
-
 def _save_scorecard(card: dict[str, Any], path: Path) -> None:
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(card, indent=2, ensure_ascii=False), encoding="utf-8")
-
 
 async def ensure_scorecard_for(city: str) -> dict[str, Any]:
     """Load (or build) a city scorecard, add English translations, and cache."""
@@ -196,17 +177,12 @@ async def ensure_scorecard_for(city: str) -> dict[str, Any]:
     _save_scorecard(card, cfg["scorecard_path"])
     return card
 
-
-# Legacy alias for Geneva-only endpoints.
 async def ensure_scorecard() -> dict[str, Any]:
     return await ensure_scorecard_for("geneva")
-
 
 def save_card(card: dict[str, Any]) -> None:
     _save_scorecard(card, scoring.SCORECARD_PATH)
 
-
-# City-parameterised recall helpers (avoid monkey-patching scoring.DATASET).
 async def _fetch_chunks_city(
     question: str, dataset: str
 ) -> tuple[str, list[dict[str, Any]]]:
@@ -222,7 +198,6 @@ async def _fetch_chunks_city(
     texts = " ".join(c.get("text", "") or "" for c in chunks if c.get("text"))
     return texts, list(chunks)
 
-
 async def _recall_city(question: str, system_prompt: str, dataset: str) -> str:
     results = await cognee.recall(
         question,
@@ -233,15 +208,9 @@ async def _recall_city(question: str, system_prompt: str, dataset: str) -> str:
     )
     return results[0]["text"] if results else ""
 
-
-# ---------------------------------------------------------------------------
-# Endpoints
-# ---------------------------------------------------------------------------
-
 @app.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
-
 
 @app.get("/cities")
 async def get_cities() -> Any:
@@ -258,13 +227,11 @@ async def get_cities() -> Any:
             })
     return {"cities": result}
 
-
 @app.get("/documents")
 async def get_documents(city: str = "geneva") -> dict[str, list[str]]:
     cfg = CITY_CONFIGS.get(city, CITY_CONFIGS["geneva"])
     manifest: dict[str, str] = scoring.load_json(cfg["manifest_path"], {})
     return {"documents": sorted(set(manifest.values()))}
-
 
 @app.get("/score")
 async def get_score(city: str = "geneva") -> Any:
@@ -275,7 +242,6 @@ async def get_score(city: str = "geneva") -> Any:
         return await ensure_scorecard_for(city)
     except Exception as exc:  # noqa: BLE001
         return error(f"Could not produce scorecard: {exc}", status=500)
-
 
 @app.post("/feedback")
 async def post_feedback(body: FeedbackBody) -> Any:
@@ -318,7 +284,6 @@ async def post_feedback(body: FeedbackBody) -> Any:
     recompute(card, config)
     save_card(card)
     return {"indicator": record, "total": card["total"], "label": card["label"]}
-
 
 @app.post("/ask")
 async def post_ask(body: AskBody, city: str = "geneva") -> Any:
@@ -382,7 +347,6 @@ async def post_ask(body: AskBody, city: str = "geneva") -> Any:
             q["translation"] = t if isinstance(t, str) else ""
 
     return {"answer": answer, "grounded": grounded, "quotes": verified_quotes}
-
 
 @app.post("/forget")
 async def post_forget(body: ForgetBody) -> Any:

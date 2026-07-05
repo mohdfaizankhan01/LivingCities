@@ -65,7 +65,6 @@ _VERDICT_QUOTE_RULE = (
     "UNDER 25 words, or empty string>\"}"
 )
 
-
 _TRANSLATE_PROMPT = (
     "You are a French-to-English translator for ecological policy documents. "
     "Your ONLY task is to translate the French text in the user's message to English. "
@@ -73,7 +72,6 @@ _TRANSLATE_PROMPT = (
     "Return ONLY the English translation as a plain sentence or phrase. "
     "No quotation marks around it, no explanation, no other text."
 )
-
 
 async def translate_quote(text: str) -> str:
     """Translate a short French evidence quote to English via the LLM.
@@ -91,7 +89,6 @@ async def translate_quote(text: str) -> str:
         return result.strip()
     except Exception:  # noqa: BLE001 - translation is best-effort
         return ""
-
 
 def build_verdict_prompt(rubric: dict[str, str] | None) -> str:
     """Build a per-indicator system prompt including rubric criteria when available."""
@@ -111,7 +108,6 @@ def build_verdict_prompt(rubric: dict[str, str] | None) -> str:
     )
     return _VERDICT_INTRO + criteria + _VERDICT_QUOTE_RULE
 
-
 def load_config(path: Path) -> dict[str, Any]:
     """Load and minimally validate the scoring config."""
     with path.open(encoding="utf-8") as handle:
@@ -120,13 +116,11 @@ def load_config(path: Path) -> dict[str, Any]:
         raise ValueError(f"{path} must define 'pillars' and 'score_bands'")
     return config
 
-
 def load_json(path: Path, default: Any) -> Any:
     """Read a JSON file, returning ``default`` if it is missing."""
     if not path.exists():
         return default
     return json.loads(path.read_text(encoding="utf-8"))
-
 
 def band_label(total: int, bands: list[dict[str, Any]]) -> str:
     """Return the score-band label whose [min, max] range contains ``total``."""
@@ -134,7 +128,6 @@ def band_label(total: int, bands: list[dict[str, Any]]) -> str:
         if band["min"] <= total <= band["max"]:
             return band["label"]
     return "Unknown"
-
 
 def strip_fences(text: str) -> str:
     """Remove markdown code fences and language hints around a JSON blob."""
@@ -145,7 +138,6 @@ def strip_fences(text: str) -> str:
             cleaned = cleaned.rstrip()[:-3]
     return cleaned.strip()
 
-
 def verify_evidence_quote(quote: str, evidence_text: str) -> bool:
     """Return True if ``quote`` (whitespace-normalised, case-insensitive) is a
     substring of ``evidence_text``.  The shared safety guard used by both the
@@ -154,7 +146,6 @@ def verify_evidence_quote(quote: str, evidence_text: str) -> bool:
     norm_q = " ".join(quote.split()).lower()
     norm_e = " ".join(evidence_text.split()).lower()
     return norm_q in norm_e
-
 
 def parse_verdict(text: str, evidence_text: str = "") -> Optional[dict[str, Any]]:
     """Parse a verdict JSON string; validate the evidence_quote against retrieved text."""
@@ -182,7 +173,6 @@ def parse_verdict(text: str, evidence_text: str = "") -> Optional[dict[str, Any]
         "quote_unverified": quote_unverified,
     }
 
-
 async def recall_text(question: str, system_prompt: str) -> str:
     """Run a RAG_COMPLETION recall with the given system prompt; return LLM text."""
     results = await cognee.recall(
@@ -194,7 +184,6 @@ async def recall_text(question: str, system_prompt: str) -> str:
     )
     return results[0]["text"] if results else ""
 
-
 async def _fetch_chunks_raw(question: str) -> list[dict[str, Any]]:
     """Run a CHUNKS recall; return raw chunk list or [] on error."""
     try:
@@ -204,7 +193,6 @@ async def _fetch_chunks_raw(question: str) -> list[dict[str, Any]]:
         )
     except Exception:  # noqa: BLE001 - provenance is best-effort, never fatal
         return []
-
 
 async def fetch_chunks(question: str) -> tuple[str, Optional[str]]:
     """Fetch top evidence chunks; return (concatenated_text, top_source_data_id).
@@ -219,7 +207,6 @@ async def fetch_chunks(question: str) -> tuple[str, Optional[str]]:
     data_id = (chunks[0].get("metadata") or {}).get("data_id")
     return texts, data_id
 
-
 async def fetch_chunks_for_ask(question: str) -> tuple[str, list[dict[str, Any]]]:
     """Fetch chunks for the /ask endpoint; return (evidence_text, raw_chunks).
 
@@ -232,12 +219,10 @@ async def fetch_chunks_for_ask(question: str) -> tuple[str, list[dict[str, Any]]
     texts = " ".join(c.get("text", "") or "" for c in chunks if c.get("text"))
     return texts, chunks
 
-
 _NOT_FOUND_FALLBACK: dict[str, Any] = {
     "verdict": "not_found", "confidence": 0.0,
     "reasoning": "", "evidence_quote": "", "quote_unverified": False,
 }
-
 
 async def judge_indicator(
     question: str,
@@ -256,7 +241,6 @@ async def judge_indicator(
         if verdict is not None:
             return verdict
     return {**_NOT_FOUND_FALLBACK, "error": "verdict JSON could not be parsed after retry"}
-
 
 async def score_indicator(
     indicator: dict[str, Any], manifest: dict[str, str],
@@ -278,7 +262,6 @@ async def score_indicator(
     print(f"{record['verdict']} (conf {record['confidence']})")
     return record
 
-
 def summarize_pillar(pillar: dict[str, Any], records: list[dict[str, Any]]) -> dict[str, Any]:
     """Build a pillar result. Empty pillars are marked not-yet-scored."""
     if not records:
@@ -289,7 +272,6 @@ def summarize_pillar(pillar: dict[str, Any], records: list[dict[str, Any]]) -> d
     return {"id": pillar["id"], "name": pillar["name"], "weight": pillar["weight"],
             "score": score, "scored": True, "indicators": records}
 
-
 def weighted_total(pillars: list[dict[str, Any]]) -> int:
     """Weighted average of *scored* pillars only (empty pillars are excluded)."""
     scored = [p for p in pillars if p["scored"]]
@@ -297,7 +279,6 @@ def weighted_total(pillars: list[dict[str, Any]]) -> int:
     if not total_weight:
         return 0
     return round(sum(p["score"] * p["weight"] for p in scored) / total_weight)
-
 
 async def build_scorecard(config: dict[str, Any], use_cache: bool) -> dict[str, Any]:
     """Score every indicator and assemble the full scorecard structure."""
@@ -322,7 +303,6 @@ async def build_scorecard(config: dict[str, Any], use_cache: bool) -> dict[str, 
             "label": band_label(total, config["score_bands"]),
             "score_bands": config["score_bands"], "pillars": pillar_results}
 
-
 def print_scorecard(card: dict[str, Any]) -> None:
     """Print a readable scorecard to the console."""
     print("\n" + "=" * 60)
@@ -345,7 +325,6 @@ def print_scorecard(card: dict[str, Any]) -> None:
                 print("        (quote blanked -- not verbatim in retrieved text)")
             if ind.get("error"):
                 print(f"        ! {ind['error']}")
-
 
 def _print_audit(card: dict[str, Any], old_scores: dict[str, Any]) -> None:
     """Print quote-unverified flags and verdict changes vs the previous run."""
@@ -382,7 +361,6 @@ def _print_audit(card: dict[str, Any], old_scores: dict[str, Any]) -> None:
     else:
         print("  (none -- all verdicts match the previous run)")
 
-
 async def main(args: argparse.Namespace) -> int:
     """Connect, score, write scorecard.json, print the scorecard."""
     try:
@@ -391,7 +369,6 @@ async def main(args: argparse.Namespace) -> int:
         print(f"CONFIG ERROR: {exc}")
         return 2
 
-    # Capture previous verdicts for change tracking before cache is cleared.
     old_scores: dict[str, Any] = load_json(SCORES_CACHE, {})
 
     try:
@@ -413,14 +390,12 @@ async def main(args: argparse.Namespace) -> int:
     _print_audit(card, old_scores)
     return 0
 
-
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="LivingCities LCUI scoring")
     parser.add_argument("--no-cache", action="store_true",
                         help="Ignore cached verdicts and force fresh recall + LLM.")
     return parser.parse_args(argv)
-
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main(parse_args())))

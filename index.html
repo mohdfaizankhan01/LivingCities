@@ -24,7 +24,6 @@
   header h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -.01em; }
   header .sub { color: var(--muted); margin: 0; }
 
-  /* ---- Mode toggle ---- */
   .mode-toggle { display: flex; background: var(--card); border: 1px solid var(--line);
     border-radius: 12px; padding: 4px; gap: 4px; margin-top: 18px; width: fit-content; }
   .mode-btn { padding: 8px 20px; border-radius: 9px; border: none; background: transparent;
@@ -33,7 +32,6 @@
   .mode-btn.active { background: var(--accent); color: #fff; }
   .mode-btn.active.delhi-mode { background: var(--delhi); }
 
-  /* ---- Single-city view ---- */
   .hero { background: var(--card); border: 1px solid var(--line); border-radius: 18px;
     box-shadow: var(--shadow); padding: 36px; margin: 28px 0; text-align: center; }
   .hero .num { font-size: 84px; font-weight: 800; line-height: 1; letter-spacing: -.03em;
@@ -61,7 +59,6 @@
   .pillar-score { flex: 0 0 54px; text-align: right; font-weight: 700; }
   .pillar-score .pending { color: var(--muted); font-weight: 500; font-size: 13px; }
 
-  /* Smooth expand/collapse via max-height (no display toggle) */
   .indicators { max-height: 0; overflow: hidden; border-top: 0px solid var(--line); }
   .pillar.open .indicators { max-height: 1600px; border-top-width: 1px; }
   .indicators-inner { padding: 4px 20px 18px; }
@@ -82,7 +79,6 @@
   .quote .src { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
   .ind .err { color: #b23b3b; font-size: 13px; }
 
-  /* ---- Compare view ---- */
   .compare-header { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 12px;
     margin: 24px 0; align-items: center; }
   .compare-city-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
@@ -121,7 +117,6 @@
   .compare-bar-num { width: 38px; text-align: right; font-weight: 700; font-size: 14px; }
   .compare-summary { margin-top: 10px; font-size: 13px; color: var(--muted); font-style: italic; }
 
-  /* Compare smooth expand */
   .compare-indicators { max-height: 0; overflow: hidden; border-top: 0px solid var(--line); }
   .compare-pillar.open .compare-indicators { max-height: 3000px; border-top-width: 1px; }
   .compare-ind { border-bottom: 1px dashed var(--line); }
@@ -148,7 +143,6 @@
     .pillar-name { flex-basis: 150px; }
   }
 
-  /* ---- Panels (ask, feedback, forget) ---- */
   .panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
     box-shadow: var(--shadow); padding: 20px; margin-bottom: 14px; }
   .panel h3 { margin: 0 0 4px; font-size: 16px; }
@@ -165,7 +159,6 @@
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 680px) { .grid2 { grid-template-columns: 1fr; } }
 
-  /* Ask panel */
   .ask-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
   .chip { background: #eaf3ee; color: var(--accent); border: 1px solid #c8e3d4;
     border-radius: 999px; padding: 5px 14px; font-size: 13px; font-weight: 600;
@@ -192,19 +185,16 @@
     color: var(--muted); font-weight: 600; }
   .ask-ungrounded { color: var(--muted); font-style: italic; padding: 10px 0; }
 
-  /* Thinking dots */
   .thinking-dots { display: flex; gap: 6px; padding: 12px 2px; align-items: center; }
   .thinking-dots span { width: 8px; height: 8px; background: var(--accent);
     border-radius: 50%; opacity: 0.35; }
   .thinking-dots::before { content: "Thinking"; font-size: 13px; color: var(--muted);
     font-style: italic; margin-right: 4px; }
 
-  /* Skeleton shimmer */
   .skeleton-block { background: #e4ecea; border-radius: 5px; }
   .skel-score { height: 72px; width: 120px; margin: 0 auto 14px; border-radius: 8px; }
   .skel-label { height: 32px; width: 140px; margin: 0 auto; border-radius: 999px; }
 
-  /* Overlay / toast */
   #overlay { position: fixed; inset: 0; background: rgba(246,248,247,.7); backdrop-filter: blur(2px);
     display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; z-index: 50; }
   #overlay.on { display: flex; }
@@ -217,10 +207,8 @@
     box-shadow: 0 4px 16px rgba(0,0,0,.18); }
   .toast.error { background: #b23b3b; }
 
-  /* View cross-fade */
   #view-single, #view-compare { will-change: opacity; }
 
-  /* --- Animation keyframes (all inside reduced-motion query) --- */
   @media (prefers-reduced-motion: no-preference) {
     .spinner { animation: spin .8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -284,7 +272,6 @@
     </div>
   </header>
 
-  <!-- ===== Single-city view ===== -->
   <div id="view-single">
     <div class="hero">
       <div class="num" id="hero-num"><span id="score">–</span><small>/100</small></div>
@@ -332,7 +319,6 @@
     </div>
   </div>
 
-  <!-- ===== Compare view ===== -->
   <div id="view-compare" style="display:none">
     <div class="compare-header" id="compare-header"></div>
     <div class="section-title">Pillar Comparison</div>
@@ -363,12 +349,7 @@
 
 <script>
 const IS_LOCAL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-// Live Cognee-backed API. Locally it's the dev server; in production it's the
-// Hugging Face Space. Ask / Feedback / Forget always route here.
 const API = IS_LOCAL ? "http://localhost:8000" : "https://faizkh7786-livingcities-api.hf.space";
-// In production, scorecards load from bundled JSON for an instant first paint
-// (the free-tier backend can cold-start ~30s). Feedback/Forget force a live
-// re-fetch so their mutations are reflected.
 let _forceLiveScore = false;
 
 async function apiFetch(path) {
@@ -383,14 +364,12 @@ async function apiFetch(path) {
 }
 const $ = (id) => document.getElementById(id);
 
-// ---- state ----
 let currentMode = "geneva";
 let compareAskCity = "geneva";
 let _gCard = null;
 let _dCard = null;
 let _firstLoad = true;
 
-// ---- animation helpers ----
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -484,7 +463,6 @@ function renderSkeleton() {
   }
 }
 
-// ---- cross-fade view switch ----
 function crossFade(outEl, inEl, callback) {
   if (prefersReducedMotion()) {
     if (outEl) outEl.style.display = "none";
@@ -534,7 +512,6 @@ function crossFade(outEl, inEl, callback) {
   }
 }
 
-// ---- toast ----
 var _toastTimer = null;
 function toast(msg, isError) {
   var t = $("toast");
@@ -564,7 +541,6 @@ function bandColor(total) {
   return "#2f7d5b";
 }
 
-// ---- mode switching ----
 function setMode(mode) {
   if (mode === currentMode) return;
   var prevMode = currentMode;
@@ -589,7 +565,6 @@ function setMode(mode) {
   }
 }
 
-// ---- hero ----
 function renderHero(card, opts) {
   if (!opts) opts = {};
   animateScore(card.total, { tint: !!opts.tint });
@@ -600,7 +575,6 @@ function renderHero(card, opts) {
   $("caption").textContent = "Weighted across " + scored + " scored pillar" + (scored === 1 ? "" : "s");
 }
 
-// ---- indicators ----
 function indHtml(ind) {
   var enLine = ind.evidence_quote_en
     ? '<span class="en">' + escapeHtml(ind.evidence_quote_en) + "</span>" : "";
@@ -617,7 +591,6 @@ function indHtml(ind) {
     "</div>" + quote + err + "</div>";
 }
 
-// ---- pillars ----
 function renderPillars(card) {
   var host = $("pillars");
   host.innerHTML = "";
@@ -713,13 +686,11 @@ async function loadSingle(city) {
   }
 }
 
-// ---- overlay ----
 function overlay(on, msg) {
   $("overlay").classList.toggle("on", on);
   if (msg) $("overlay").querySelector(".msg").textContent = msg;
 }
 
-// ---- compare ----
 function compareIndHalf(ind, cityClass) {
   var quote = ind.evidence_quote
     ? '<div class="quote">' +
@@ -831,7 +802,6 @@ async function loadCompare() {
   }
 }
 
-// ---- ask ----
 function fillAsk(chip) { $("ask-input").value = chip.textContent.trim(); $("ask-input").focus(); }
 function fillAskCmp(chip) { $("cmp-ask-input").value = chip.textContent.trim(); $("cmp-ask-input").focus(); }
 
@@ -914,7 +884,6 @@ async function submitAskCmp() {
   }
 }
 
-// ---- feedback / forget ----
 async function submitFeedback() {
   var indicator_id = $("fb-ind").value;
   var correction_text = $("fb-text").value.trim();
@@ -928,12 +897,9 @@ async function submitFeedback() {
     }).then(function(r) { return r.json(); });
     if (res.error) throw new Error(res.error);
     _gCard = null;
-    // Reload but preserve old score for tint animation.
-    // Force a live re-fetch so the mutation is reflected (prod uses static JSON by default).
     var oldScore = parseInt($("score").textContent) || 0;
     _forceLiveScore = true;
     try { await loadSingle("geneva"); } finally { _forceLiveScore = false; }
-    // Re-apply tint now that new score is rendered
     if (_gCard && _gCard.total !== oldScore) {
       animateScore(_gCard.total, { from: oldScore, tint: true, duration: 900 });
     }
@@ -977,7 +943,6 @@ async function submitForget() {
   }
 }
 
-// ---- event wiring ----
 $("ask-btn").addEventListener("click", submitAsk);
 $("ask-input").addEventListener("keydown", function(e) { if (e.key === "Enter") submitAsk(); });
 $("cmp-ask-btn").addEventListener("click", submitAskCmp);
@@ -985,7 +950,6 @@ $("cmp-ask-input").addEventListener("keydown", function(e) { if (e.key === "Ente
 $("fb-btn").addEventListener("click", submitFeedback);
 $("fg-btn").addEventListener("click", submitForget);
 
-// ---- init ----
 renderSkeleton();
 loadSingle("geneva");
 </script>

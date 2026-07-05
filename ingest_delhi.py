@@ -26,7 +26,6 @@ SANITY_QUERIES = [
     "What governance structure does Delhi have for climate adaptation?",
 ]
 
-
 async def main() -> int:
     try:
         await connect_cloud()
@@ -59,7 +58,6 @@ async def main() -> int:
 
     print(f"\nIngestion complete: {ok}/{total} documents.")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main()))

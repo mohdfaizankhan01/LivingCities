@@ -5,19 +5,12 @@ import { motion } from "framer-motion";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "/app.html";
 
-/**
- * The one action on the page. Concrete at rest; on hover a vine
- * draws itself around the frame, leaves unfurl, spores rise,
- * butterflies visit, and the material blooms green.
- * Clicking opens a living veil that carries you into the app.
- */
 export default function LaunchButton() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [veil, setVeil] = useState<{ x: number; y: number } | null>(null);
 
   const launch = (e: React.MouseEvent) => {
     if (veil) return;
-    // keyboard activation / synthetic clicks report 0,0 — bloom from the button
     let { clientX: x, clientY: y } = e;
     if (!x && !y) {
       const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -33,7 +26,7 @@ export default function LaunchButton() {
   return (
     <>
       <div ref={wrapRef} className="launch-wrap">
-        {/* vine frame */}
+
         <svg className="vine-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <path
             className="vine-path"
@@ -46,7 +39,7 @@ export default function LaunchButton() {
             vectorEffect="non-scaling-stroke"
           />
         </svg>
-        {/* leaves unfurl along the vine */}
+
         <svg className="pointer-events-none absolute -inset-5 h-[calc(100%+40px)] w-[calc(100%+40px)] overflow-visible" aria-hidden="true">
           <g fill="#6fae6a">
             <path className="leafling d1" transform="translate(14 82)" d="M0,0 C-6,-3 -8,-10 -4,-14 C2,-10 3,-4 0,0 Z" />
@@ -56,7 +49,6 @@ export default function LaunchButton() {
           </g>
         </svg>
 
-        {/* rising spores */}
         {[18, 34, 52, 68, 84].map((left, i) => (
           <span
             key={i}
@@ -65,7 +57,6 @@ export default function LaunchButton() {
           />
         ))}
 
-        {/* visiting butterflies */}
         <span className="bfly" style={{ top: -34, left: "12%" }}>
           <svg width="22" height="18" viewBox="0 0 22 18">
             <g className="w">
@@ -100,7 +91,6 @@ export default function LaunchButton() {
         </motion.button>
       </div>
 
-      {/* enter-the-future veil */}
       {veil && (
         <motion.div
           className="veil"

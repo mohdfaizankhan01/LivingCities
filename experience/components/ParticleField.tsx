@@ -2,15 +2,6 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 
-/**
- * One canvas, one rAF loop, an entire ecology.
- * The mix of particles is driven by scroll progress (progressRef):
- *   p ~ 0   : industrial dust, slow and grey
- *   p > 0.45: pollen and drifting leaves fade in as dust settles
- *   p > 0.55: butterflies arrive and gently follow the cursor
- * Everything is alpha-weighted, never popped.
- */
-
 type Dust = { x: number; y: number; r: number; vx: number; vy: number; a: number };
 type Leaf = { x: number; y: number; s: number; vx: number; vy: number; rot: number; vr: number; hue: number };
 type Butterfly = { x: number; y: number; vx: number; vy: number; t: number; hue: string; s: number };
@@ -84,14 +75,13 @@ export default function ParticleField({
     document.addEventListener("visibilitychange", onVis);
 
     const drawButterfly = (b: Butterfly, alpha: number) => {
-      const flap = 0.2 + Math.abs(Math.sin(b.t * 0.28)) * 0.8; // 0.2..1 wing spread, never negative
+      const flap = 0.2 + Math.abs(Math.sin(b.t * 0.28)) * 0.8;
       ctx.save();
       ctx.translate(b.x, b.y);
       ctx.rotate(Math.atan2(b.vy, b.vx) * 0.25);
       ctx.scale(b.s, b.s);
       ctx.globalAlpha = alpha;
       ctx.fillStyle = b.hue;
-      // wings
       ctx.beginPath();
       ctx.ellipse(-5 * flap, -3, 6 * flap, 4.4, -0.5, 0, Math.PI * 2);
       ctx.ellipse(5 * flap, -3, 6 * flap, 4.4, 0.5, 0, Math.PI * 2);
@@ -100,7 +90,6 @@ export default function ParticleField({
       ctx.ellipse(-4 * flap, 3, 4.4 * flap, 3.2, -0.9, 0, Math.PI * 2);
       ctx.ellipse(4 * flap, 3, 4.4 * flap, 3.2, 0.9, 0, Math.PI * 2);
       ctx.fill();
-      // body
       ctx.fillStyle = "#2f3a2c";
       ctx.beginPath();
       ctx.ellipse(0, 0, 1.4, 5, 0, 0, Math.PI * 2);
@@ -117,7 +106,6 @@ export default function ParticleField({
       const lifeA = smooth(p, 0.45, 0.75);
       const bflyA = smooth(p, 0.55, 0.8);
 
-      // dust
       if (dustA > 0.01) {
         ctx.fillStyle = "#cfd6da";
         for (const d of dust) {
@@ -131,7 +119,6 @@ export default function ParticleField({
         }
       }
 
-      // pollen — warm motes rising
       if (lifeA > 0.01) {
         for (const m of pollen) {
           m.x += m.vx + Math.sin((m.y + m.x) * 0.01) * 0.1;
@@ -150,7 +137,6 @@ export default function ParticleField({
           ctx.fill();
         }
 
-        // leaves
         for (const l of leaves) {
           l.x += l.vx + Math.sin(l.rot * 2) * 0.3;
           l.y += l.vy;
@@ -169,7 +155,6 @@ export default function ParticleField({
         }
       }
 
-      // butterflies — wander plus gentle cursor curiosity
       if (bflyA > 0.01) {
         for (const b of bflies) {
           b.t += 1;
@@ -182,7 +167,7 @@ export default function ParticleField({
             ax += (dx / dist) * 0.05;
             ay += (dy / dist) * 0.05;
           } else if (dist <= 40) {
-            ax -= (dx / dist) * 0.09; // too close — flutter away
+            ax -= (dx / dist) * 0.09;
             ay -= (dy / dist) * 0.09;
           }
           b.vx = (b.vx + ax) * 0.985;

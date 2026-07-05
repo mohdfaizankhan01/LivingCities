@@ -41,10 +41,6 @@ from cognee_cloud import (
 
 GENEVA_DIR = Path("documents/geneva")
 METHODOLOGY_DIR = Path("documents/methodology")
-# Fresh dataset names: the original "geneva"/"methodology" datasets got stuck in a
-# half-deleted server state (409 ProgrammingError) after an early forget(), so we
-# use clean, never-forgotten names. Cognee dedupes by content hash, so re-running
-# is idempotent (re-uploaded files add no new items).
 GENEVA_DATASET = "geneva_lcui"
 METHODOLOGY_DATASET = "methodology_lcui"
 
@@ -59,7 +55,6 @@ SANITY_QUERIES = [
     "What does the plan say about urban trees or green infrastructure?",
 ]
 
-
 def list_documents(directory: Path) -> list[Path]:
     """Return supported source files in a directory, sorted by name."""
     if not directory.is_dir():
@@ -69,7 +64,6 @@ def list_documents(directory: Path) -> list[Path]:
         for p in directory.iterdir()
         if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES
     )
-
 
 async def ingest_file(
     path: Path, dataset: str, seen_ids: set[str]
@@ -110,7 +104,6 @@ async def ingest_file(
     print(f"OK  status={summary.status} new_items={len(new_ids)} ({elapsed:.1f}s)")
     return True, mapping
 
-
 async def ingest_directory(
     directory: Path, dataset: str
 ) -> tuple[int, int, dict[str, str]]:
@@ -136,13 +129,11 @@ async def ingest_directory(
     print(f"[{dataset}] done: {succeeded}/{len(files)} succeeded")
     return succeeded, len(files), manifest
 
-
 def save_manifest(manifest: dict[str, str]) -> None:
     """Persist the ``data_id -> filename`` map for scoring.py provenance."""
     CACHE_DIR.mkdir(exist_ok=True)
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"\nWrote provenance manifest ({len(manifest)} items) to {MANIFEST_PATH}")
-
 
 async def run_sanity_queries(dataset: str) -> None:
     """Run a few recall() queries and print answers to eyeball quality."""
@@ -155,7 +146,6 @@ async def run_sanity_queries(dataset: str) -> None:
             print(f"A: (recall failed — {type(exc).__name__}: {exc})")
             continue
         print(f"A: {answer}")
-
 
 async def main(args: argparse.Namespace) -> int:
     """Connect, (optionally) reset, ingest both datasets, sanity-check."""
@@ -188,14 +178,12 @@ async def main(args: argparse.Namespace) -> int:
     print(f"\nIngestion complete. Geneva: {geneva_ok}/{geneva_total} documents.")
     return 0
 
-
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="LivingCities document ingestion")
     parser.add_argument("--skip-sanity", action="store_true",
                         help="Skip the post-ingestion sanity recall() queries.")
     return parser.parse_args(argv)
-
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main(parse_args())))

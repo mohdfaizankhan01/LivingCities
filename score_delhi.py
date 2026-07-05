@@ -15,13 +15,10 @@ from pathlib import Path
 import scoring
 from cognee_cloud import CogneeConfigError, connect_cloud, disconnect_cloud
 
-# Redirect all scoring I/O to Delhi assets.
 scoring.DATASET = "delhi_lcui"
 scoring.SCORECARD_PATH = Path("cache/scorecard_delhi.json")
 scoring.MANIFEST_PATH = Path("cache/ingest_manifest_delhi.json")
-# Use a Delhi-specific score cache so Geneva's cache is untouched.
 scoring.SCORES_CACHE = Path("cache/scores_delhi.json")
-
 
 async def main() -> int:
     try:
@@ -49,7 +46,6 @@ async def main() -> int:
     scoring.print_scorecard(card)
     print(f"\nWrote {scoring.SCORECARD_PATH}")
 
-    # Audit: list any unverified quotes.
     unverified = [
         ind["id"]
         for pillar in card["pillars"]
@@ -64,7 +60,6 @@ async def main() -> int:
         print("  (none)")
 
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main()))

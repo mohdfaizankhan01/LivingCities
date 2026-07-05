@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 
-// Fraunces is a variable font — omitting weight ships one file per style
-// instead of six, which matters for LCP on the hero headline.
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",

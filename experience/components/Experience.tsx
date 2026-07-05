@@ -10,22 +10,6 @@ import LaunchButton from "./LaunchButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * One single scroll heals the city — the whole transformation plays
- * across one viewport of scrolling (a ~150vh track). A scrubbed GSAP
- * timeline (0-10) drives it:
- *
- *  0.0  hero fades, palette begins to soften
- *  2.0  concrete cracks, first grass appears
- *  3.0  smoke thins, moss spreads
- *  4.2  vines climb, fog starts to lift
- *  5.2  trees rise, green roofs unroll, the median becomes a park
- *  6.2  solar panels catch light, traffic dissolves, warmth arrives
- *  7.6  people walk, water clears
- *  8.2  birds return, light rays break through
- *  8.6  the finale: one living city, one button
- */
-
 const END_PALETTE: Record<string, string> = {
   "--sky": "#9fd8f2",
   "--horizon": "#cfeadf",
@@ -67,7 +51,6 @@ export default function Experience() {
     const stage = stageRef.current!;
 
     if (prefersReduced) {
-      // The world arrives already healed — no scrub, no particles.
       gsap.set(stage, { ...END_PALETTE });
       gsap.set(".tree", { scale: 1, opacity: 1, transformOrigin: "50% 100%" });
       gsap.set(".groof", { scaleY: 1, opacity: 1 });
@@ -106,15 +89,12 @@ export default function Experience() {
         },
       });
 
-      /* ---- hero departs ---- */
       tl.to(".hero-copy", { opacity: 0, y: -70, duration: 1 }, 0);
       tl.to(".scroll-hint", { opacity: 0, duration: 0.5 }, 0);
 
-      /* ---- palette: cold -> thawing -> alive ---- */
       tl.to(stage, { ...MID_PALETTE, duration: 3.4 }, 0.4);
       tl.to(stage, { ...END_PALETTE, duration: 4.8 }, 4.0);
 
-      /* ---- act I: the first cracks of life ---- */
       tl.to(".crack", { strokeDashoffset: 0, duration: 1.4, stagger: 0.35 }, 2.0);
       tl.fromTo(".tuft",
         { scale: 0, opacity: 0 },
@@ -123,7 +103,6 @@ export default function Experience() {
       tl.to(".smoke-g", { opacity: 0, duration: 1.8 }, 3.0);
       tl.to(".moss", { opacity: 0.9, duration: 1.6, stagger: 0.25 }, 3.2);
 
-      /* ---- act II: the climb ---- */
       tl.to(".vine", { strokeDashoffset: 0, duration: 2.2, stagger: 0.5 }, 4.2);
       tl.to(".fog", { opacity: 0, duration: 2.4, stagger: 0.3 }, 4.5);
       tl.to(".lwall", { opacity: 0.92, duration: 2.0, stagger: 0.4 }, 5.0);
@@ -141,7 +120,6 @@ export default function Experience() {
         { scaleY: 1, opacity: 1, duration: 1.0, transformOrigin: "50% 100%" },
         5.9);
 
-      /* ---- act III: light and quiet ---- */
       tl.to(".solar", { opacity: 1, duration: 1.2, stagger: 0.25 }, 6.2);
       tl.to(".car", { opacity: 0, duration: 1.6, stagger: 0.2 }, 6.1);
       tl.to(".lanes", { opacity: 0.15, duration: 1.5 }, 6.2);
@@ -149,20 +127,16 @@ export default function Experience() {
       tl.to(".sun-glow", { opacity: 0.85, duration: 2.4 }, 6.5);
       tl.to(".warm", { opacity: 0.3, duration: 2.8 }, 6.6);
 
-      /* ---- act IV: life returns ---- */
       tl.to(".person", { opacity: 1, duration: 1.1, stagger: 0.3 }, 7.6);
       tl.to(".sparkle", { opacity: 0.9, duration: 1.0 }, 7.9);
       tl.to(".flock", { opacity: 1, duration: 1.0 }, 8.2);
       tl.to(".rays", { opacity: 0.45, duration: 1.4 }, 8.3);
 
-      /* ---- gentle camera ---- */
       tl.fromTo(".scene-svg", { scale: 1.07, yPercent: 1.6 }, { scale: 1, yPercent: 0, duration: 10, ease: "power1.out" }, 0);
 
-      /* ---- finale ---- */
       tl.fromTo(".finale", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, 8.6);
       tl.set(".finale", { pointerEvents: "auto" }, 8.9);
 
-      /* ---- pointer parallax on scene layers ---- */
       const layers = gsap.utils.toArray<SVGGElement>("[data-depth]");
       const setters = layers.map((l) => ({
         x: gsap.quickTo(l, "x", { duration: 0.9, ease: "power2.out" }),
@@ -195,14 +169,12 @@ export default function Experience() {
           <CityScene />
           <ParticleField progressRef={progressRef} disabled={reduced} />
 
-          {/* logo — the only permanent chrome */}
           <div className="absolute left-8 top-7 z-40 select-none md:left-12">
             <span className="font-display text-xl text-[#f2f5ef]/95">
               Living<em className="italic text-[#f4e9c8]">Cities</em>
             </span>
           </div>
 
-          {/* hero — entrance is pure CSS; GSAP owns the parent */}
           <div className="hero-copy absolute inset-0 z-30 flex flex-col items-start justify-center px-8 md:px-[8vw]">
             <h1 className="hero-headline rise-in r1 max-w-[13ch] text-[#f2f5ef]">
               Designing cities that let <em>life thrive</em>.
@@ -214,7 +186,6 @@ export default function Experience() {
             </p>
           </div>
 
-          {/* scroll hint */}
           <div className="scroll-hint absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-3">
             <div className="fade-in-late flex flex-col items-center gap-3">
               <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#e9eef0]/55">
@@ -224,7 +195,6 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* finale — one city, one button */}
           <div className="finale pointer-events-none absolute inset-x-0 bottom-[14vh] z-40 flex flex-col items-center gap-8 text-center" style={{ opacity: 0 }}>
             <p className="font-display max-w-[26ch] text-2xl font-light italic text-[#10241a] md:text-4xl" style={{ textShadow: "0 1px 24px rgba(245,250,246,.55)" }}>
               You just watched a city come back to life.
