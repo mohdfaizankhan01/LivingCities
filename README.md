@@ -2,7 +2,7 @@
 
 > Submission for **The Hangover Part AI** Hackathon &nbsp;·&nbsp; Team **noName**
 
-**Live demo → [livingcities-app.netlify.app](https://livingcities-app.netlify.app)** &nbsp;·&nbsp; **Live API → [HF Space](https://faizkh7786-livingcities-api.hf.space/health)**
+**Live demo → [livingcities-app.netlify.app](https://livingcities-app.netlify.app)** &nbsp;·&nbsp; **Live API → [HF Space](https://faizkh7786-livingcities-api.hf.space/health)** &nbsp;·&nbsp; **Pitch deck → [docs/LivingCities-Deck.pptx](docs/LivingCities-Deck.pptx)**
 
 **The Life-Centric Urbanism Index — powered by living memory.**
 
