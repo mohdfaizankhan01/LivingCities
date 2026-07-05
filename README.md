@@ -20,9 +20,6 @@ LivingCities answers that question from primary sources, in the city's own langu
 
 ## What We Built
 
-### Cinematic Landing Experience
-A scroll-driven, full-screen city transformation built in Next.js + GSAP ScrollTrigger + Lenis. A concrete jungle heals into a living ecosystem in a single scroll gesture. Particle ecology (dust → pollen → leaves → butterflies) responds to scroll progress and cursor position.
-
 ### Life-Centric Urbanism Index (LCUI)
 An AI-powered scorecard app that:
 - Scores cities across **5 pillars × 4 indicators = 20 questions**
