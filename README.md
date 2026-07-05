@@ -1,5 +1,7 @@
 # LivingCities
 
+> Submission for **[The Hangover Part AI](https://thehangoverpartai.com)** Hackathon
+
 **The Life-Centric Urbanism Index — powered by living memory.**
 
 Cities are scored not on what they promise, but on what they have actually written down. LivingCities reads a city's own policy documents — master plans, biodiversity strategies, climate programmes — ingests them into a Cognee knowledge graph, and scores how seriously each city designs for life beyond the human. Every verdict carries a verbatim quote. Every quote is traceable to its source.
@@ -181,4 +183,4 @@ Every city leaves a written record. We read it.
 
 ---
 
-*Built for the Cognee Hackathon 2025.*
+*Built for **The Hangover Part AI** Hackathon.*
