@@ -1,139 +1,122 @@
 # LivingCities — Demo Video Script
 
 > **Narrator:** Safir (sole speaker for the entire video)
-> **Target runtime:** ~3 minutes (≈ 470 spoken words at a calm 150 wpm)
+> **Hard limit:** 3:00 — this script runs ~2:45 at a calm 150 wpm (≈ 410 spoken words)
 > **Team:** noName · **Hackathon:** The Hangover Part AI
 > **Live demo:** https://livingcities-app.netlify.app
 
-**How to read this file**
-- **[SCREEN]** — what the viewer sees / what you do on screen.
-- **[SAFIR]** — the exact words to say. Only Safir speaks; there is no second voice.
-- **(pause)** — a short beat for the visual to land.
-- Timecodes are cumulative guides, not hard cuts.
+**Covers the four required submission points, in this order:**
+1. **About the project** — Scene 1
+2. **Demo** — Scenes 2–6 (the core of the video)
+3. **Tech stack & architecture** — Scene 7
+4. **Learning & growth** *(optional)* — Scene 8
+
+**Reading key:** **[SCREEN]** = what to show / do · **[SAFIR]** = exact words to say · **(pause)** = short beat for the visual to land. Only Safir speaks — no second voice anywhere.
 
 ---
 
-## SCENE 0 — Cold Open · The Concrete City  `0:00 – 0:15`
+## 1 · ABOUT THE PROJECT  `0:00 – 0:32`
 
-**[SCREEN]** Open on the landing page hero at `livingcities-app.netlify.app`. The grey concrete city is still. Do **not** scroll yet. Let it breathe for two seconds.
+**[SCREEN]** Open on the landing hero — the grey concrete city, still. Hold it for two seconds. Don't scroll yet.
 
 **[SAFIR]**
-> This is how most cities are planned today — for cars, for concrete, for people, and for nothing else alive.
+> Cities today are planned for cars and concrete — and for almost nothing else alive.
 > (pause)
-> My name is Safir, and with LivingCities, we asked a harder question: what if a city was designed to let *every* living thing thrive?
+> I'm Safir, from team noName, and this is LivingCities. We measure how well a city is designed for life beyond the human — not from surveys or press releases, but from the city's *own* policy documents. And every score is backed by a real quote, traceable to its source.
 
 ---
 
-## SCENE 1 — The Living Transformation  `0:15 – 0:35`
+## 2 · DEMO — The Living Transformation  `0:32 – 0:52`
 
-**[SCREEN]** Slowly scroll the landing page. The city heals in one continuous motion — cracks sprout grass, vines climb, trees rise, the sky warms, butterflies drift in, the river turns blue.
+**[SCREEN]** Scroll the landing page slowly. The grey city heals in one continuous motion — grass, vines, trees, warm sky, butterflies, blue water. Reach the **Launch AI** button; hover so the vine draws itself, then click. The green veil carries you into the app.
 
 **[SAFIR]**
-> Watch what happens when we design for life. Grey becomes green. Streets become corridors. Rooftops become habitats.
+> It begins as an experience. Watch a grey city heal into a living one as you scroll — every element mapped to a real planning decision a city can make.
 > (pause)
-> This isn't a render — every element you see maps to a real planning decision a city can actually make.
+> And then you launch the index behind it.
 
 ---
 
-## SCENE 2 — Launch the Index  `0:35 – 0:50`
+## 3 · DEMO — Scores From the Evidence  `0:52 – 1:22`
 
-**[SCREEN]** Reach the bottom — the healed city and the **Launch AI** button. Hover so the vine draws itself around the button, then click. The green veil expands and carries into the scorecard app.
+**[SCREEN]** Geneva's scorecard animates in to **70 / 100**, "Life-Responsive." Expand **Ecological Continuity** to reveal indicators and a verbatim French quote. Then click the **Delhi** tab — the score re-counts down to **30 / 100**, "Ecologically Absent."
 
 **[SAFIR]**
-> But a beautiful vision means nothing without evidence. So we built the engine behind it — the Life-Centric Urbanism Index.
+> Here's Geneva — seventy out of a hundred. Life-Responsive. Five pillars, twenty indicators, each one grounded in a verbatim quote from Geneva's own documents, in the original French.
 > (pause)
-> Let's launch it.
+> Delhi scores thirty — Ecologically Absent. Same twenty indicators, the same standard, applied honestly — a measure a city can't spin.
 
 ---
 
-## SCENE 3 — Geneva's Scorecard  `0:50 – 1:20`
+## 4 · DEMO — Compare  `1:22 – 1:34`
 
-**[SCREEN]** The Geneva scorecard animates in — the score counts up to **70 / 100**, "Life-Responsive." Expand the **Ecological Continuity** pillar so the indicators and a verbatim French quote are visible.
+**[SCREEN]** Click **Compare**. Both cities render side by side, bars animating, Geneva leading pillar by pillar.
 
 **[SAFIR]**
-> This is Geneva — seventy out of a hundred. Life-Responsive.
-> (pause)
-> We don't score cities on surveys or press releases. We score them on their *own* policy documents — their master plans, their biodiversity strategies — in their original language.
-> (pause)
-> And every single verdict is backed by a verbatim quote, traceable to the exact source document. If the evidence isn't there, the score says so.
+> Side by side, the gap stops being a number and becomes a diagnosis — exactly which pillars a city is failing, and where the work begins.
 
 ---
 
-## SCENE 4 — Delhi's Contrast  `1:20 – 1:40`
+## 5 · DEMO — Ask the City's Memory  `1:34 – 2:04`  *(the highlight)*
 
-**[SCREEN]** Click the **Delhi** tab. The score drops and re-counts to **30 / 100**, "Ecologically Absent." Let the lower bars render.
-
-**[SAFIR]**
-> Now compare that to Delhi — thirty out of a hundred. Ecologically Absent.
-> (pause)
-> Same twenty indicators. Same five pillars. Same standard, applied honestly — because the whole point is a measure a city can't spin.
-
----
-
-## SCENE 5 — Compare Mode  `1:40 – 1:55`
-
-**[SCREEN]** Click **Compare**. Both cities render side by side, bars animating in, Geneva leading pillar by pillar.
+**[SCREEN]** Scroll to **Ask the city's memory**. Type *"Does Geneva protect biodiversity corridors?"* and click **Ask**. Wait for the grounded answer, verbatim quote, translation, and source file to render.
 
 **[SAFIR]**
-> Side by side, the gap becomes a diagnosis. You can see *exactly* which pillars a city is failing — and where the work needs to begin.
-
----
-
-## SCENE 6 — Ask the City's Memory  `1:55 – 2:30`  *(the highlight)*
-
-**[SCREEN]** Scroll to **Ask the city's memory**. Type: *"Does Geneva protect biodiversity corridors?"* Click **Ask**. Wait for the grounded answer, verbatim quote, translation, and source to appear.
-
-**[SAFIR]**
-> But a score is just the beginning. The real power is that the city's documents become a living memory you can *interrogate*.
-> (pause — while it answers)
-> I'll ask Geneva directly: does it protect biodiversity corridors?
+> But the real power is that these documents become a living memory you can *question*. I'll ask Geneva directly — does it protect biodiversity corridors?
 > (pause — answer appears)
-> And there it is — a grounded answer, pulled live from the documents, with the original French quote, an English translation, and the exact source file. No hallucination. Only what the city actually wrote.
+> And there it is: a grounded answer pulled straight from the source, with the original quote, an English translation, and the exact file it came from. No hallucination — only what the city actually wrote.
 
 ---
 
-## SCENE 7 — Living Memory  `2:30 – 2:45`
+## 6 · DEMO — Living Memory  `2:04 – 2:14`
 
-**[SCREEN]** Scroll to the **Live memory demo** — the Expert feedback and Update memory panels. Gesture to them (optionally submit one correction and let the score re-animate).
+**[SCREEN]** Scroll to the **Live memory demo** — Expert feedback and Update memory panels. Gesture to them; optionally submit one correction and let the score re-animate.
 
 **[SAFIR]**
-> And this memory is alive. An expert can add a correction, and the score re-computes on the spot. Repeal a policy, and we *forget* the document — and watch the score fall.
-> (pause)
-> The index changes the moment the record changes.
+> And it's alive. An expert can correct the memory, or forget a repealed policy — and the score updates on the spot.
 
 ---
 
-## SCENE 8 — Under the Hood  `2:45 – 3:00`
+## 7 · TECH STACK & ARCHITECTURE  `2:14 – 2:44`
 
-**[SCREEN]** Cut to a simple architecture card or the README diagram: **PDFs → Cognee (remember) → recall → ask / improve / forget**. Netlify frontend + Hugging Face backend.
+**[SCREEN]** Cut to a simple architecture card / the README diagram: **City PDFs → Cognee (remember) → recall → ask / improve / forget**, with **Next.js + Netlify** on the front and **FastAPI + Hugging Face** on the back.
 
 **[SAFIR]**
-> Under the hood, this all runs on Cognee — we *remember* each city's documents, *recall* evidence for every indicator, and *improve* the memory over time.
+> Under the hood, the intelligence runs on Cognee. We *remember* each city's documents into a knowledge graph, *recall* evidence for every indicator, and *improve* that memory with expert feedback.
 > (pause)
-> A cinematic front end on Netlify, a live Cognee backend on Hugging Face.
+> The cinematic front end is Next.js with GSAP, on Netlify. The scoring API is FastAPI in a Docker container on Hugging Face, talking to Cognee Cloud — scores load instantly from cached snapshots, while Ask hits the live backend.
 
 ---
 
-## SCENE 9 — Close  `3:00 – 3:12`
+## 8 · LEARNING & GROWTH  `2:44 – 3:00`  *(optional)*
 
-**[SCREEN]** Return to the healed living city — the final landing frame, or the LivingCities logo.
+**[SCREEN]** Return to the healed living city — the final landing frame or the LivingCities logo.
 
 **[SAFIR]**
-> Every city leaves a written record. LivingCities reads it — and shows you whether that city is truly making room for life.
+> What we learned: grounding a model in a real memory changes everything — every answer became traceable and honest. The hardest part was teaching the AI to say "I don't know" when the documents are silent — and that restraint is exactly what makes the index trustworthy.
 > (pause)
-> This is LivingCities. Thank you.
+> Every city leaves a written record. LivingCities reads it. Thank you.
 
 ---
 
 ## Appendix · Recording Checklist
 
-- [ ] **Wake the backend** ~1 minute before recording: open `https://faizkh7786-livingcities-api.hf.space/health` (free Space sleeps after ~48h idle; first Ask is slow if cold).
-- [ ] Pre-type the Ask question so the take is clean, or accept one natural typing beat.
-- [ ] Record at 1440p+, hide bookmarks bar, use a clean browser profile.
-- [ ] Enable smooth scrolling; take Scene 1 slowly — the transformation is the wow moment.
-- [ ] Keep total under 3:15. If trimming, cut Scene 7 first (mention feedback verbally instead).
-- [ ] One voice only — Safir narrates start to finish.
+- [ ] **Wake the backend ~1 minute before recording:** open `https://faizkh7786-livingcities-api.hf.space/health`. The free Space sleeps after ~48h idle, and a cold Ask can take ~30s.
+- [ ] Pre-type the Ask question, or accept one clean typing beat, so the take stays under time.
+- [ ] Record at 1440p+, clean browser profile, bookmarks bar hidden.
+- [ ] Take the Scene 2 scroll **slowly** — the transformation is the wow moment.
+- [ ] Watch the clock: total must be **≤ 3:00**. If over, trim Scene 6 first (mention feedback verbally in Scene 5).
+- [ ] **One voice only — Safir narrates start to finish.**
 
-## Appendix · One-Line Pitch (if a title card or caption is needed)
+## Appendix · Timing Map (for quick checks)
+
+| # | Section | Requirement point | Ends at |
+|---|---|---|---|
+| 1 | About the project | About | 0:32 |
+| 2–6 | Product walkthrough | Demo | 2:14 |
+| 7 | Cognee + Next.js + FastAPI + hosting | Tech stack & architecture | 2:44 |
+| 8 | Grounding, honesty, the hard part | Learning & growth (optional) | 3:00 |
+
+## Appendix · One-Line Pitch (title card / caption)
 
 > **LivingCities** — the Life-Centric Urbanism Index. We score cities on ecological integrity from their own policy documents, powered by living memory.
